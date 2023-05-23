@@ -8,11 +8,16 @@
 import Foundation
 
 class WeatherService {
-    let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=Almaty&appid=8ecb09e44125900b5afa53789adc08b5")
+    let apiKey = "8ecb09e44125900b5afa53789adc08b5"
     
-    func fetchWeather(completion: @escaping (Weather) -> ()) {
+    func fetchWeather(cityName: String, completion: @escaping (Weather) -> ()) {
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
         
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print("Data Task Error: \(error.localizedDescription)")
                 return

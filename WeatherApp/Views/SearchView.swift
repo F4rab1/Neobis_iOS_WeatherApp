@@ -28,6 +28,16 @@ class SearchView: UIView {
         return textField
     }()
     
+    let searchButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Search", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 22
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     let backgroundView : UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -59,6 +69,7 @@ class SearchView: UIView {
         backgroundView.addSubview(closeButton)
         addSubview(backgroundView)
         addSubview(searchField)
+        addSubview(searchButton)
     }
     
     func setupConstraints(){
@@ -78,6 +89,13 @@ class SearchView: UIView {
             make.leading.trailing.equalToSuperview().inset(55)
             make.height.equalTo(44)
         }
+        
+        searchButton.snp.makeConstraints { make in
+            make.top.equalTo(searchField.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(120)
+            make.height.equalTo(44)
+        }
     }
-
+    
 }

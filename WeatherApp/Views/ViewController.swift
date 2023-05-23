@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         weatherViewModel.updateSearch = { [weak self] weather in
             self?.weatherModel = weather
+            self?.updateUI()
         }
         
         mainView.searchButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
@@ -36,14 +37,14 @@ class ViewController: UIViewController {
         setupConstraints()
         
     }
-
+    
     func setupViews() {
         view.addSubview(mainView)
     }
     
     @objc func searchTapped() {
         weatherViewModel.didTapSearch?()
-        let vc = SearchViewController()
+        let vc = SearchViewController(vm: weatherViewModel)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -52,6 +53,20 @@ class ViewController: UIViewController {
         mainView.snp.makeConstraints{make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    func updateUI() {
+        guard let weatherModel = weatherModel else { return }
+        
+        let temperatureInC = Int(weatherModel.main.temp - 273.15)
+        
+        mainView.cityLabel.text = weatherModel.name
+        mainView.temperatureLabel.text = "\(temperatureInC)°C"
+        mainView.countryLabel.text = "\(weatherModel.sys.country)"
+        mainView.windLabel1.text = "\(weatherModel.wind.speed) m/s"
+        mainView.visibility1.text = "\(weatherModel.visibility) meters"
+        mainView.humidity1.text = "\(weatherModel.main.humidity)%"
+        mainView.airPressure1.text = "\(weatherModel.main.pressure) hPa"
     }
 }
 
