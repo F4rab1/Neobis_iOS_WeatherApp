@@ -18,6 +18,16 @@ class SearchView: UIView {
         return button
     }()
     
+    let searchField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(red: 237/255, green: 237/255, blue: 237/255, alpha: 1.0)
+        textField.placeholder = "   SEARCH LOCATION"
+        textField.textColor = .black
+        textField.layer.cornerRadius = 22
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
     let backgroundView : UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -48,6 +58,7 @@ class SearchView: UIView {
     func setupViews(){
         backgroundView.addSubview(closeButton)
         addSubview(backgroundView)
+        addSubview(searchField)
     }
     
     func setupConstraints(){
@@ -60,6 +71,12 @@ class SearchView: UIView {
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(backgroundView.snp.topMargin).offset(22)
             make.trailing.equalTo(backgroundView.snp.trailingMargin).offset(-17)
+        }
+        
+        searchField.snp.makeConstraints { make in
+            make.top.equalTo(backgroundView.snp.top).offset(65)
+            make.leading.trailing.equalToSuperview().inset(55)
+            make.height.equalTo(44)
         }
     }
 
