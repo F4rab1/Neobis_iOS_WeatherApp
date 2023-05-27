@@ -451,32 +451,32 @@ class MainView: UIView {
             let dayTemperatures = Array(data.list[startIndex..<endIndex])
             let maxTemperature = dayTemperatures.reduce(Double.leastNormalMagnitude) { max($0, $1.main.temp) }
             
-            let weatherDescription: String? = dayTemperatures.first?.weather.description
+//            let weatherDescription: String? = dayTemperatures.first?.weather.description
             
             switch dayIndex {
             case 0:
                 // First day
-                firstDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
+//                firstDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
                 let temperatureInC = Int(maxTemperature - 273.15)
                 firstDayTempLabel.text = "\(temperatureInC)°C"
             case 1:
                 // Second day
-                secondDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
+//                secondDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
                 let temperatureInC = Int(maxTemperature - 273.15)
                 secondDayTempLabel.text = "\(temperatureInC)°C"
             case 2:
                 // Third day
-                thirdDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
+//                thirdDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
                 let temperatureInC = Int(maxTemperature - 273.15)
                 thirdDayTempLabel.text = "\(temperatureInC)°C"
             case 3:
                 // Fourth day
-                fouthDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
+//                fouthDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
                 let temperatureInC = Int(maxTemperature - 273.15)
                 fouthDayTempLabel.text = "\(temperatureInC)°C"
             case 4:
                 // Fifth day
-                fifthDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
+//                fifthDayIcon.image = selectImageForWeather(weatherDescription ?? "snow")
                 let temperatureInC = Int(maxTemperature - 273.15)
                 fifthDayTempLabel.text = "\(temperatureInC)°C"
             default:
@@ -485,22 +485,22 @@ class MainView: UIView {
         }
     }
     
-    func selectImageForWeather(_ weatherCondition: String) -> UIImage? {
-        switch weatherCondition {
-        case "clear sky":
-            return UIImage(systemName: "sun.max.fill")
-        case "few clouds", "scattered clouds", "broken clouds":
-            return UIImage(systemName: "cloud.sun.fill")
-        case "shower rain", "rain":
-            return UIImage(named: "bg-cloud-rain-sun")
-        case "snow":
-            return UIImage(named: "bg-cloud-snow")
-        case "thunderstorm":
-            return UIImage(named: "bg-cloud-lightning")
-        default:
-            return UIImage(systemName: "sun.max")
-        }
-    }
+//    func selectImageForWeather(_ weatherCondition: String) -> UIImage? {
+//        switch weatherCondition {
+//        case "clear sky":
+//            return UIImage(systemName: "sun.max.fill")
+//        case "few clouds", "scattered clouds", "broken clouds":
+//            return UIImage(systemName: "cloud.sun.fill")
+//        case "shower rain", "rain":
+//            return UIImage(named: "bg-cloud-rain-sun")
+//        case "snow":
+//            return UIImage(named: "bg-cloud-snow")
+//        case "thunderstorm":
+//            return UIImage(named: "bg-cloud-lightning")
+//        default:
+//            return UIImage(systemName: "sun.max")
+//        }
+//    }
     
     func setupConstraints(){
         searchButton.snp.makeConstraints{ make in

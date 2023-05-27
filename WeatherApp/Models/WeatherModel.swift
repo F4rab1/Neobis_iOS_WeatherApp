@@ -51,13 +51,13 @@ struct Forecast: Codable {
 
 struct WeatherData: Codable {
     let main: TemperatureData
-    let weather: DescriptionData
+//    let weather: DescriptionData
 }
 
 struct TemperatureData: Codable {
     let temp: Double
 }
 
-struct DescriptionData: Codable {
-    let description: String
-}
+//struct DescriptionData: Codable {
+//    let description: String
+//}
