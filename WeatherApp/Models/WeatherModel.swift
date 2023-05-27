@@ -44,3 +44,15 @@ struct WindInfo: Codable {
     let speed: Double
     let deg: Int
 }
+
+struct Forecast: Codable {
+    let list: [WeatherData]
+}
+
+struct WeatherData: Codable {
+    let main: TemperatureData
+}
+
+struct TemperatureData: Codable {
+    let temp: Double
+}

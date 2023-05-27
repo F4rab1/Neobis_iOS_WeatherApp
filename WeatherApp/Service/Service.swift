@@ -33,4 +33,33 @@ class WeatherService {
             }
         }.resume()
     }
+    
+    func fetchWeekWeather(cityName: String, completion: @escaping (Forecast) -> ()) {
+        let urlString = "https://api.openweathermap.org/data/2.5/forecast?q=\(cityName)&appid=\(apiKey)"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+
+            do {
+                let forecast = try JSONDecoder().decode(Forecast.self, from: data)
+                completion(forecast)
+            } catch {
+                print("Error decoding forecast data: \(error)")
+            }
+        }
+
+        task.resume()
+    }
 }

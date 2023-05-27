@@ -9,11 +9,13 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    weak var mainViewController: ViewController?
     let searchView = SearchView()
     let weatherViewModel: WeatherViewModelType
     
-    init(vm: WeatherViewModelType) {
+    init(vm: WeatherViewModelType, mainViewController: ViewController) {
         weatherViewModel = vm
+        self.mainViewController = mainViewController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,6 +52,8 @@ class SearchViewController: UIViewController {
         }
         
         weatherViewModel.fetchWeatherData(cityName: cityName)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) { [weak self] in
+            self?.mainViewController?.weatherViewModel.didTapSearch?()
+        }
     }
 }
