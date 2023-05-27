@@ -19,11 +19,16 @@ class MainView: UIView {
     }()
     
     let dateLabel: UILabel = {
-        let Label = UILabel()
-        Label.text = "Date"
-        Label.textColor = .white
-        Label.font = .systemFont(ofSize: 14)
-        return Label
+        let label = UILabel()
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd, yyyy"
+        formatter.locale = Locale(identifier: "en_US")
+        let dateString = formatter.string(from: date)
+        label.text = "Today, \(dateString)"
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 14)
+        return label
     }()
     
     let cityLabel: UILabel = {
@@ -185,7 +190,7 @@ class MainView: UIView {
     
     let firstDayIcon : UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bg-rainy")
+        image.image = UIImage(named: "bg-cloud-snow")
         return image
     }()
     
@@ -207,7 +212,7 @@ class MainView: UIView {
     
     let secondDayIcon : UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bg-rainy")
+        image.image = UIImage(named: "bg-cloud-rain-sun")
         return image
     }()
     
@@ -229,7 +234,7 @@ class MainView: UIView {
     
     let thirdDayIcon : UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bg-rainy")
+        image.image = UIImage(named: "bg-cloud-burshaq")
         return image
     }()
     
@@ -251,7 +256,7 @@ class MainView: UIView {
     
     let fouthDayIcon : UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bg-rainy")
+        image.image = UIImage(named: "bg-cloud-lightning")
         return image
     }()
     
@@ -273,7 +278,7 @@ class MainView: UIView {
     
     let fifthDayIcon : UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bg-rainy")
+        image.image = UIImage(named: "bg-cloud-2")
         return image
     }()
     
@@ -427,6 +432,50 @@ class MainView: UIView {
         visibility1.text = "\(data.visibility) meters"
         humidity1.text = "\(data.main.humidity)%"
         airPressure1.text = "\(data.main.pressure) hPa"
+    }
+    
+    func fillWeekData(with data: Forecast) {
+        
+        let temperaturesPerDay = 6
+        
+        guard data.list.count >= temperaturesPerDay else {
+            print("Insufficient temperature data")
+            return
+        }
+        
+        for dayIndex in 0..<data.list.count / temperaturesPerDay {
+            
+            let startIndex = dayIndex * temperaturesPerDay
+            let endIndex = startIndex + temperaturesPerDay
+        
+            let dayTemperatures = Array(data.list[startIndex..<endIndex])
+            let maxTemperature = dayTemperatures.reduce(Double.leastNormalMagnitude) { max($0, $1.main.temp) }
+            
+            switch dayIndex {
+            case 0:
+                // First day
+                let temperatureInC = Int(maxTemperature - 273.15)
+                firstDayTempLabel.text = "\(temperatureInC)°C"
+            case 1:
+                // Second day
+                let temperatureInC = Int(maxTemperature - 273.15)
+                secondDayTempLabel.text = "\(temperatureInC)°C"
+            case 2:
+                // Third day
+                let temperatureInC = Int(maxTemperature - 273.15)
+                thirdDayTempLabel.text = "\(temperatureInC)°C"
+            case 3:
+                // Fourth day
+                let temperatureInC = Int(maxTemperature - 273.15)
+                fouthDayTempLabel.text = "\(temperatureInC)°C"
+            case 4:
+                // Fifth day
+                let temperatureInC = Int(maxTemperature - 273.15)
+                fifthDayTempLabel.text = "\(temperatureInC)°C"
+            default:
+                break
+            }
+        }
     }
     
     func setupConstraints(){

@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     let mainView = MainView()
     
     var weatherModel: Weather?
-    var forecast: Forecast?
+    var forecastModel: Forecast?
     
     init(vm: WeatherViewModelType) {
         weatherViewModel = vm
@@ -31,6 +31,11 @@ class ViewController: UIViewController {
         weatherViewModel.updateSearch = { [weak self] weather in
             self?.weatherModel = weather
             self?.mainView.fillData(with: weather)
+        }
+        
+        weatherViewModel.updateForecast = { [weak self] forecast in
+            self?.forecastModel = forecast
+            self?.mainView.fillWeekData(with: forecast)
         }
         
         mainView.searchButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
